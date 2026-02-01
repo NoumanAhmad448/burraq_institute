@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Classes;
+
+use App\Models\Student as CRMStudent;
+use Illuminate\Support\Facades\Cache;
+
+class StudentsYearly
+{
+    /**
+     * Get students grouped by month for a given year
+     * Uses caching to avoid repeated DB queries
+     *
+     * @param int|null $year
+     * @param int $ttl Time to live in minutes
+     * @return \Illuminate\Support\Collection
+     */
+    public static function get($year = null, $ttl = 1)
+    {
+        $year = !empty($year) ? $year : now()->year;
+        $cacheKey = "students_yearly_{$year}";
+        // dump($year);
+        return Cache::remember($cacheKey, $ttl, function () use ($year) {
+            return CRMStudent::selectRaw('MONTH(registration_date) as month, COUNT(*) as total')
+                ->whereYear('registration_date', $year)
+                ->where('is_deleted', 0)
+                ->groupBy('month')
+                ->orderBy('month')
+                ->get();
+        });
+    }
+
+    /**
+     * Clear the cache for a given year
+     *
+     * @param int|null $year
+     * @return void
+     */
+    public static function clear($year = null)
+    {
+        $cacheKey = "students_yearly_{$year}";
+        Cache::forget($cacheKey);
+    }
+}

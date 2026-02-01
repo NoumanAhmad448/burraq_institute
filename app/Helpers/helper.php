@@ -1,0 +1,402 @@
+<?php
+
+use App\Models\CourseStatus;
+use Illuminate\Support\Facades\Auth;
+use App\Classes\LyskillsCarbon;
+use App\Helpers\UploadData;
+use App\Notifications\SlackErrorNotification;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
+
+
+if (! function_exists('custom_dump')) {
+    function custom_dump($input): void
+    {
+        if (config("app.debug") && config("lms.force_debug")) {
+            dump($input);
+        }
+    }
+}
+
+if (!function_exists('check_input')) {
+    function check_input($u_input)
+    {
+        return htmlspecialchars(trim(stripslashes($u_input)));
+    }
+}
+
+
+if (!function_exists('is_xss')) {
+    function is_xss($u_input)
+    {
+        return strip_tags($u_input) != $u_input;
+    }
+}
+
+if (!function_exists('reduceCharIfAv')) {
+    function reduceCharIfAv($u_input, $limit)
+    {
+        return  strlen($u_input) > $limit ? \Illuminate\Support\Str::limit($u_input, $limit) : $u_input;
+    }
+}
+
+if (!function_exists('reduceWithStripping')) {
+    function reduceWithStripping($u_input, $limit)
+    {
+        $u_input = strip_tags($u_input);
+        return  strlen($u_input) > $limit ? \Illuminate\Support\Str::limit($u_input, $limit) : $u_input;
+    }
+}
+
+if (!function_exists('removeSpace')) {
+    function removeSpace($input)
+    {
+        if (is_string($input)) {
+            return  trim($input);
+        }
+        return $input;
+    }
+}
+
+if (!function_exists('isAdmin')) {
+    function isAdmin()
+    {
+        return Auth::user()->is_admin ?? abort(403);
+    }
+}
+
+if (!function_exists('allowCourseToAdmin')) {
+    function allowCourseToAdmin()
+    {
+        return Auth::user()->is_admin ? true : false;
+    }
+}
+
+if (!function_exists('showLessText')) {
+    function showLessText($text, $len)
+    {
+        if (strlen($text) > $len) {
+            return substr($text, $len);
+        }
+        return $text;
+    }
+}
+
+if (!function_exists('changeCourseStatus')) {
+    function changeCourseStatus($course_id, $val, $field_name)
+    {
+        $c_status = CourseStatus::where('course_id', $course_id)->first();
+        if ($c_status) {
+            $c_status->$field_name = $val;
+            $c_status->save();
+        }
+    }
+}
+if (!function_exists('isSuperAdmin')) {
+
+    function isSuperAdmin()
+    {
+        return auth()->user()->is_super_admin == 1 ?? abort(403);
+    }
+}
+if (!function_exists('isCurrentUserAdmin')) {
+
+    function isCurrentUserAdmin()
+    {
+        return auth()->user()->is_admin == 1 ? true : false;
+    }
+}
+
+if (!function_exists('setEmailConfigViaAdmin')) {
+
+    function setEmailConfigViaAdmin()
+    {
+        config(['mail.mailers.host' => getAdminEmail()]);
+        config(['mail.mailers.username' => getAdminEmail()]);
+        config(['mail.mailers.password' => 'BurraqLyskills']);
+        config(['mail.from.address' => getAdminEmail()]);
+        config(['mail.from.name' => 'CRM']);
+    }
+}
+if (!function_exists('setEmailConfigViaIns')) {
+
+    function setEmailConfigViaIns($i_name)
+    {
+        config(['mail.mailers.host' => getInsEmail()]);
+        config(['mail.mailers.username' => getInsEmail()]);
+        config(['mail.mailers.password' => 'BurraqLyskills']);
+        config(['mail.from.address' => getInsEmail()]);
+        config(['mail.from.name' => 'Instructor ' . $i_name . ' From CRM']);
+    }
+}
+if (!function_exists('getAdminEmail')) {
+
+    function getAdminEmail()
+    {
+        return  'admin@burraqengineering.com';
+    }
+}
+
+if (!function_exists('getInsEmail')) {
+
+    function getInsEmail()
+    {
+        return  'instructor@burraqengineering.com';
+    }
+}
+
+if (!function_exists('setEmailConfigViaStudent')) {
+
+    function setEmailConfigViaStudent()
+    {
+        config(['mail.mailers.host' => getStudentEmail()]);
+        config(['mail.mailers.username' => getStudentEmail()]);
+        config(['mail.mailers.password' => 'BurraqLyskillsEngineering65$']);
+        config(['mail.from.address' => getStudentEmail()]);
+    }
+}
+if (!function_exists('getStudentEmail')) {
+
+    function getStudentEmail()
+    {
+        return  'student@burraqengineering.com';
+    }
+}
+
+if (!function_exists('setEmailConfigForCourse')) {
+
+    function setEmailConfigForCourse()
+    {
+        config(['mail.mailers.host' => getCourseEmail()]);
+        config(['mail.mailers.username' => getCourseEmail()]);
+        config(['mail.mailers.password' => config("setting.no_reply_email_pass")]);
+        config(['mail.from.address' => getCourseEmail()]);
+        // config(['mail.from.name' => 'Instructor '.$i_name. ' From CRM']);
+
+    }
+}
+if (!function_exists('getCourseEmail')) {
+
+    function getCourseEmail()
+    {
+        return  'no-reply@burraqengineering.com';
+    }
+}
+
+if (!function_exists('isCurrentUserBlogger')) {
+
+    function isCurrentUserBlogger()
+    {
+        return auth()->user()->is_blogger == 1 ? true : false;
+    }
+}
+
+if (!function_exists('dateFormat')) {
+
+    function dateFormat($value)
+    {
+        // dump("here");
+        if($value == null){            return;        }
+        return LyskillsCarbon::dateFormat($value);
+    }
+}
+if (!function_exists('dbDate')) {
+
+    function dbDate($value)
+    {
+        return LyskillsCarbon::dbDateFormat($value);
+    }
+}
+if (!function_exists('php_config')) {
+
+    function php_config()
+    {
+        if (config("app.debug")) {
+            custom_dump("memory_limit =>" . ini_get("memory_limit"));
+            custom_dump("-----------------------");
+            custom_dump("upload_max_filesize =>" . ini_get("upload_max_filesize"));
+            custom_dump("-----------------------");
+        }
+
+        ini_set('upload_max_filesize', config("setting.memory_limit"));
+        ini_set('upload_max_filesize', config("setting.upload_max_filesize"));
+        set_time_limit(config("setting.set_time_limit"));
+    }
+}
+if (!function_exists('server_logs')) {
+    function server_logs(
+        $e = array(),
+        $request = array(),
+        $config = false,
+        $return_response = true,
+        ) {
+
+        recordLogs($e);
+        if ($return_response) {
+            $response = ['error', config("setting.err_msg")];
+
+            // Safely get request values
+            $first = $request[0] ?? null;
+            $second = $request[1] ?? null;
+
+            // Determine response type
+            if ($first && $second && method_exists($second, 'expectsJson') && $second->expectsJson()) {
+                return response()->json($response, \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            return back()->with($response);
+        }
+    }
+}
+
+
+
+if (! function_exists('debug_logs')) {
+    function debug_logs($input, $trace = false): void
+    {
+        if (config('app.debug')) {
+            custom_dump($input);
+            custom_dump(config('setting.dash_lines'));
+
+            if ($trace) {
+                debug_backtrace(2);
+            }
+        }
+    }
+}
+
+if (! function_exists('throw_exception')) {
+    function throw_exception($msg)
+    {
+        if (app()->environment(config("app.live_env"))) {
+            Notification::route("slack", config("health.notifications.slack.webhook_url"))->notify(new SlackErrorNotification($msg));
+        }
+    }
+}
+
+function isNotProduction(){
+    return  !app()->environment(config("app.live_env"));
+}
+
+  function uploadPhoto($img)
+    {
+
+        $f_name = $img->getClientOriginalName();
+
+        $uploadData = new \App\Helpers\UploadData();
+        return $uploadData->upload(
+            $img,
+            $f_name
+        );
+    }
+
+function img_path($img_path){
+    return UploadData::$img_path . $img_path;
+}
+
+function show_payment($amount){
+    return "Rs " . number_format($amount);
+}
+
+function showWebPageDate($value){
+     if($value == null){            return;        }
+        return LyskillsCarbon::webDate($value);
+}
+
+if (!function_exists('parseMonthYear')) {
+    /**
+     * Parse month/year from request and return month, year, startOfMonth, endOfMonth
+     *
+     * @param Request $request
+     * @param string $monthKey
+     * @param string $yearKey
+     * @return array
+     */
+    function parseMonthYear(Request $request, string $monthKey = 'month', string $yearKey = 'year'): array
+    {
+        // Get month and year from request
+        $month = $request->get($monthKey);
+        $year = $request->get($yearKey);
+
+        // Default to current month if not provided
+        if (!$request->has($monthKey)) {
+            $month = now()->month;
+        } else if(!empty($month)){
+            $month = (int) Carbon::create()->month($month)->month;
+        }
+
+        // Default to current year if not provided
+        if (empty($year)) {
+            $year = now()->year;
+        } else {
+            $year = (int) Carbon::create()->year($year)->year;
+        }
+
+        // Calculate start and end of month
+        $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
+        $endOfMonth   = Carbon::create($year, $month, 1)->endOfMonth()->endOfDay();
+
+        return compact('month', 'year', 'startOfMonth', 'endOfMonth');
+    }
+}
+if (!function_exists('studentMonthYear')) {
+    /**
+     * Parse month/year from request and return month, year, startOfMonth, endOfMonth
+     *
+     * @param Request $request
+     * @param string $monthKey
+     * @param string $yearKey
+     * @return array
+     */
+    function studentMonthYear(Request $request, string $monthKey = 'month', string $yearKey = 'year'): array
+    {
+        // Get month and year from request
+        $month = $request->get($monthKey);
+        $year = $request->get($yearKey);
+
+        // Default to current month if not provided
+        if(!empty($month)){
+            $month = (int) Carbon::create()->month($month)->month;
+        }
+
+        // Default to current year if not provided
+        if (!empty($year)) {
+            $year = (int) Carbon::create()->year($year)->year;
+        }
+
+        // Calculate start and end of month
+        $startOfMonth = Carbon::create($year, $month, 1)->startOfDay();
+        $endOfMonth   = Carbon::create($year, $month, 1)->endOfMonth()->endOfDay();
+        $status = $request->get("status");
+        return compact('month', 'year', 'startOfMonth', 'endOfMonth', "status");
+    }
+}
+
+function recordLogs($message){
+    Log::error($message);
+
+}
+
+
+function humanize($value)
+{
+    return Str::of($value)
+        ->replace('_', ' ')
+        ->title(); // Capitalize each word
+}
+
+function statusBadgeClass($status)
+{
+    return match ($status) {
+        'pending'         => 'badge-warning',
+        'resolved'        => 'badge-success',
+        'contacted'       => 'badge-primary',
+        'follow_up'       => 'badge-info',
+        'not_interested'  => 'badge-secondary',
+        'other'           => 'badge-dark',
+        default           => 'badge-light',
+    };
+}

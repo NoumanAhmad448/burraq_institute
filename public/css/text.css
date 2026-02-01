@@ -1,0 +1,516 @@
+/* ================================
+   Sidebar Wrapper
+================================ */
+#sidebar-wrapper {
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    min-height: 100vh;
+    padding-top: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+/* Closed state */
+#sidebar-wrapper.closed {
+    margin-left: -260px;
+}
+
+/* ================================
+   Sidebar Menu
+================================ */
+#side_menu {
+    padding-left: 0;
+    margin: 0;
+}
+
+/* Menu item */
+#side_menu .nav-item {
+    margin: 2px 0;
+}
+
+/* Menu link */
+#side_menu .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Icon */
+#side_menu .nav-link i {
+    font-size: 15px;
+    width: 22px;
+    text-align: center;
+    color: #6b7280;
+}
+
+/* Hover */
+#side_menu .nav-link:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+/* Hover icon */
+#side_menu .nav-link:hover i {
+    color: #2563eb;
+}
+
+/* Active state */
+#side_menu .nav-link.active {
+    background-color: #eef2ff;
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+#side_menu .nav-link.active i {
+    color: #1d4ed8;
+}
+
+/* ================================
+   Section separators
+================================ */
+#side_menu hr {
+    margin: 12px 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* ================================
+   Hamburger icon
+================================ */
+#hamburger {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    color: #374151;
+}
+
+#hamburger:hover {
+    background-color: #f3f4f6;
+}
+
+/* ================================
+   Mobile Behavior
+================================ */
+@media (max-width: 767px) {
+    #sidebar-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        z-index: 1050;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* ===== Dashboard Stat Cards ===== */
+
+.stat-card {
+    border: none;
+    border-left: 4px solid #0d6efd;      /* Accent color */
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    transition: all 0.25s ease;
+    height: 100%;
+}
+
+/* Hover animation */
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Icon styling */
+.stat-card .icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #0d6efd;
+}
+
+/* Title text */
+.stat-card h6 {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+}
+
+/* Count / number */
+.stat-card h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+/* Optional small text (trend / info) */
+.stat-card small {
+    font-size: 12px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    .stat-card h2 {
+        font-size: 24px;
+    }
+
+    .stat-card .icon-wrapper {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+/* Top controls container */
+.datatable-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+/* Search wrapper */
+.datatable-search {
+    position: relative;
+    margin-left: auto;
+}
+
+/* Search input */
+.datatable-input {
+    width: 260px;
+    padding: 9px 14px 9px 36px;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* Focus effect */
+.datatable-input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13,110,253,.15);
+    outline: none;
+}
+
+/* Font Awesome 4.7 search icon */
+
+
+/* Dropdown wrapper */
+.datatable-dropdown label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+/* Select field */
+.datatable-selector {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Focus */
+.datatable-selector:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13,110,253,.15);
+    outline: none;
+}
+
+@media (max-width: 576px) {
+    .datatable-top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .datatable-input {
+        width: 100%;
+    }
+
+    .datatable-dropdown label {
+        justify-content: space-between;
+    }
+}
+
+/* Search wrapper */
+.datatable-search {
+    position: relative;
+}
+
+/* Search input */
+.datatable-input {
+    width: 260px;
+    padding: 9px 36px 9px 14px; /* space on RIGHT for icon */
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* Focus effect */
+.datatable-input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13,110,253,.15);
+    outline: none;
+}
+
+/* Search icon on RIGHT */
+.datatable-search::after {
+    content: "\f002"; /* fa-search */
+    font-family: FontAwesome;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9aa0a6;
+    font-size: 14px;
+    pointer-events: none;
+}
+@media (max-width: 576px) {
+    .datatable-input {
+        width: 100%;
+    }
+}
+
+.datatable-input:focus + .search-icon {
+    color: #0d6efd;
+}
+
+/* FlickerDate input fix */
+input.datepicker,
+.datepicker input,
+input.datepicker-input {
+    background-color: #fff !important;
+    color: #495057 !important;
+    cursor: pointer;
+}
+
+
+
+.file-upload-card {
+    display: block;
+    border: 2px dashed #dcdcdc;
+    border-radius: 14px;
+    padding: 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: #fafafa;
+}
+
+.file-upload-card:hover {
+    border-color: #0d6efd;
+    background: #f4f8ff;
+}
+
+.upload-content i {
+    font-size: 36px;
+    color: #0d6efd;
+    margin-bottom: 10px;
+}
+
+.upload-content p {
+    margin: 0;
+    font-weight: 600;
+}
+
+.upload-content small {
+    color: #6c757d;
+}
+
+.btn i {
+    pointer-events: none;
+}
+
+.btn {
+    min-width: 34px;
+}
+
+/* ================================
+   DataTables Custom Design
+   (Bootstrap 5 Friendly)
+   ================================ */
+
+/* Wrapper */
+.dataTables_wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* ================================
+   Table
+   ================================ */
+table.dataTable {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0;
+}
+
+table.dataTable thead th {
+    background: #f8f9fa;
+    font-weight: 600;
+    padding: 12px 14px;
+    border-bottom: 1px solid #dee2e6;
+    white-space: nowrap;
+}
+
+table.dataTable tbody td {
+    padding: 12px 14px;
+    vertical-align: middle;
+    border-top: 1px solid #f1f3f5;
+}
+
+/* Row hover */
+table.dataTable tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Remove default footer border */
+table.dataTable.no-footer {
+    border-bottom: none;
+}
+
+/* ================================
+   Search Box
+   ================================ */
+.dataTables_filter {
+    margin-bottom: 10px;
+}
+
+.dataTables_filter label {
+    font-weight: 500;
+}
+
+.dataTables_filter input {
+    width: 220px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    outline: none;
+}
+
+.dataTables_filter input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13,110,253,.15);
+}
+
+/* ================================
+   Length Dropdown
+   ================================ */
+.dataTables_length label {
+    font-weight: 500;
+}
+
+.dataTables_length select {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+/* ================================
+   Excel / Buttons
+   ================================ */
+.dt-buttons {
+    margin-bottom: 10px;
+}
+
+.dt-buttons .btn,
+.dt-buttons button {
+    padding: 6px 14px;
+    font-size: 0.875rem;
+    border-radius: 8px;
+}
+
+/* ================================
+   Pagination
+   ================================ */
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 12px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 6px 12px;
+    margin: 0 2px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    background: #ffffff;
+    color: #0d6efd !important;
+    cursor: pointer;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #e9ecef;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #0d6efd !important;
+    color: #ffffff !important;
+    border-color: #0d6efd;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ================================
+   Info Text
+   ================================ */
+.dataTables_info {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+/* ================================
+   Processing
+   ================================ */
+.dataTables_processing {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* ================================
+   Responsive Fix
+   ================================ */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before {
+    background-color: #0d6efd;
+}
+
+
+.amount-success { color: #198754; }
+.amount-danger  { color: #dc3545; }
+.amount-warning { color: #fd7e14; }
+.amount-primary { color: #0d6efd; }
+.amount-info    { color: #0dcaf0; }
+.amount-purple  { color: #6f42c1; }
+
+
+/* Fix vertical alignment for Select2 (default theme) */
+.select2-container .select2-selection--single {
+    display: flex;
+    align-items: center;   /* ⭐ vertical centering */
+    min-height: 38px;      /* match normal input height */
+    padding: 0 8px;
+}
+
+.select2-container .select2-selection__rendered {
+    line-height: normal;  /* remove hard-coded line-height */
+    padding-left: 0;
+}
+
