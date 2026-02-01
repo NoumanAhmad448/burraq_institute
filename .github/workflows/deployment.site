@@ -1,0 +1,69 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - master # Only trigger when pushing to the 'master' branch
+  workflow_dispatch:
+    inputs:
+      deploy_type:
+        description: "Choose deploy type"
+        required: true
+        default: "normal"
+        type: choice
+        options:
+          - docker
+          - normal
+
+permissions:
+  contents: write # Allows the workflow to push changes
+  actions: read # Allows reading action logs
+  pull-requests: write # Enables PR creation and updates
+
+jobs:
+  laravel-deployment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1200
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch the entire repository history
+      # Step 5: Set up SSH
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@836c84ec59a0e7bc0eabc79988384eb567561ee2
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Verify SSH key loaded
+        run: |
+          ssh-add -l
+
+      - name: Add remote server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Debug SSH + rsync
+        run: |
+          echo "=== SSH agent keys ==="
+          ssh-add -l || echo "NO KEYS LOADED"
+
+          echo "=== SSH verbose test ==="
+
+          echo "=== rsync verbose ==="
+          rsync -avz --progress \
+            -e "ssh -vvv -o BatchMode=yes" \
+            ./ \
+            ${{ secrets.SSH_USERNAME }}@${{ secrets.SERVER_IP }}:${{secrets.SERVER_PATH}}
+
+      - name: Run server-side deployment script
+        uses: appleboy/ssh-action@9817ef4a1793d4009d854d26cfb0ba4b615d5791
+        with:
+          username: ${{ secrets.SSH_USERNAME }}
+          host: ${{ secrets.SERVER_IP }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd ${{secrets.SERVER_PATH}} &&
+            sudo chmod -R 775 ${{secrets.SERVER_PATH}}/server_deploy.sh &&
+            sudo chown -R root:root ${{secrets.SERVER_PATH}}/server_deploy.sh &&
+            ./server_deploy.sh

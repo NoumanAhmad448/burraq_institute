@@ -53,6 +53,13 @@
 
 {{-- Red Alert  css/text.css must comes in the end always --}}
 <link rel="stylesheet" href="{{ asset('css/text.css') }}">
+@if (config("app.name") == "site1")
+<link rel="stylesheet" href="{{ asset('css/theme-ocean.css') }}">
+@elseif(config("app.name") == "site2")
+<link rel="stylesheet" href="{{ asset('css/theme-sunset.css') }}">
+@else
+<link rel="stylesheet" href="{{ asset('css/theme-forest.css') }}">
+@endif
 {{-- this must comes in the end always --}}
 
 <!-- CSRF Token -->

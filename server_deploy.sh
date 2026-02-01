@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Enable maintenance mode
-yes | php artisan down --force
+# Enable maintenance mode  --force param is dead
+yes | php artisan down
 
 # Create necessary directories
 mkdir -p /home/nomilyskills/public_html/crm.burraqengineering.com/storage/app
@@ -46,17 +46,17 @@ fi
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-cache
 
 # Laravel Seeders
-# yes | php artisan db:seed --class=LanguageSeeder
+yes | php artisan db:seed --class=LanguageSeeder
 
 
 # Avoid any node permission error
 sudo chown -R root:root /home/nomilyskills/public_html/crm.burraqengineering.com/
 
 # Create a custom link of public folder with storage folder
-# yes | php artisan storage:link
+yes | php artisan storage:link
 
-# Run database migrations
-yes | php artisan migrate --force
+# Run database migrations  --force is dead
+yes | php artisan migrate
 
 # Clear caches
 php artisan cache:clear && php artisan config:clear && php artisan route:clear

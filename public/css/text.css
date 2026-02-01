@@ -1,3 +1,9 @@
+:root {
+  --brand-primary: var(--bs-primary);
+  --brand-accent: var(--bs-success);
+  --brand-border: var(--bs-primary);
+}
+
 /* ================================
    Sidebar Wrapper
 ================================ */
