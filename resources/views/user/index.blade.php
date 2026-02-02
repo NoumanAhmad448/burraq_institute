@@ -35,7 +35,7 @@
                     {{-- Show role only if not admin --}}
                     <td>
                         @if(!$user->is_admin)
-                            {{ $user->role }}
+                            {{ humanize($user->role) }}
                         @else
                             -
                         @endif
@@ -53,7 +53,7 @@
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" onclick="return confirm('Delete user?')">Delete</button>
                         </form>
-                            <a href="{{ route('hr.logs', ["user_id" => $user?->id]) }}" class="btn btn-info btn-sm">Logs</a>
+                            {{-- <a href="{{ route('hr.logs', ["user_id" => $user?->id]) }}" class="btn btn-info btn-sm">Logs</a> --}}
                         </x-admin>
                         @endif
                     </td>

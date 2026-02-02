@@ -12,20 +12,20 @@
                             width="150" />
                     </div>
                     <!--</x-slot>-->
-                    @if(false)
-                    <a href="{{ route('google-login') }}" class="btn btn-info btn-lg  my-1 d-block" style=""> <i
-                            class="fa fa-google" aria-hidden="true"></i>
-                        Sign Up With Google
-                    </a>
-                    <a href="{{ route('fb-login') }}" class="btn btn-info btn-lg  my-1 d-block" style=""> <i
-                            class="fa fa-facebook" aria-hidden="true"></i>
+                    @if (false)
+                        <a href="{{ route('google-login') }}" class="btn btn-info btn-lg  my-1 d-block" style=""> <i
+                                class="fa fa-google" aria-hidden="true"></i>
+                            Sign Up With Google
+                        </a>
+                        <a href="{{ route('fb-login') }}" class="btn btn-info btn-lg  my-1 d-block" style=""> <i
+                                class="fa fa-facebook" aria-hidden="true"></i>
 
-                        Sign Up With Facebook
-                    </a>
-                    <a href="{{ route('li-login') }}" class="btn btn-info btn-lg  my-1 d-block" style=""> <i
-                            class="fa fa-linkedin" aria-hidden="true"></i>
-                        Sign Up With LinkedIn
-                    </a>
+                            Sign Up With Facebook
+                        </a>
+                        <a href="{{ route('li-login') }}" class="btn btn-info btn-lg  my-1 d-block" style=""> <i
+                                class="fa fa-linkedin" aria-hidden="true"></i>
+                            Sign Up With LinkedIn
+                        </a>
                     @endif
                     <x-jet-validation-errors class="mb-4" />
 
@@ -44,27 +44,17 @@
                                 name="email" :value="old('email')" required />
                         </div>
 
-                        <div class="form-group mt-4">
+                        <div class="form-group mt-4 w-75">
                             <x-jet-label for="password" value="{{ __('Password') }}" />
                             <div class="input-group mb-3">
 
-                                <input id="password" class="form-control" placeholder="password min 8 digits"
+                                <input id="password" class="form-control w-75" placeholder="password min 8 digits"
                                     type="password" name="password" required autocomplete="new-password">
                                 <div class="input-group-append">
                                     <span class="input-group-text  bg-website cursor-pointer cursor_pointer text-white"
                                         id="show_pass"><i class="fa fa-eye" aria-hidden="true"></i>
                                 </div>
                             </div>
-
-                            <!--<div class="flex">-->
-                            <!--    <x-jet-input id="password" class="block mt-1 w-75"-->
-                            <!--    placeholder="password min 8 digits"-->
-                            <!--    type="password" name="password" required autocomplete="new-password" />-->
-                            <!--    <div class="input-group-append rounded-2xl">-->
-                            <!--        <span class="input-group-text  bg-website cursor-pointer cursor_pointer text-white" id="show_pass"><i class="fa fa-eye" aria-hidden="true"></i>-->
-                            <!--        </span>-->
-                            <!--    </div>-->
-                            <!--</div>-->
                         </div>
 
                         <div class="form-group mt-4 w-75">
@@ -77,25 +67,16 @@
                                     <span class="input-group-text  bg-website cursor-pointer cursor_pointer text-white"
                                         id="c_pass"><i class="fa fa-eye" aria-hidden="true"></i>
                                 </div>
-                                <!--<div class="flex">-->
-                                <!--<x-jet-input id="password_confirmation"-->
-                                <!--    placeholder="confirm password"-->
-                                <!-- class="block mt-1 w-75" type="password" name="password_confirmation" required autocomplete="new-password" />-->
-                                <!-- <div class="input-group-append rounded-2xl">-->
-                                <!--    <span class="input-group-text  bg-website cursor-pointer cursor_pointer text-white" id="c_pass"><i class="fa fa-eye" aria-hidden="true"></i>-->
-                                <!--    </span>-->
-                                <!--</div>-->
-                                <!-- </div>-->
                             </div>
 
-                            <div class="form-check mt-3 w-75">
+                            {{-- <div class="form-check mt-3 w-75">
                                 <input class="form-check-input" type="checkbox" id="terms" name="terms">
                                 <label class="form-check-label" for="terms">
                                     I accept these <a href="https://burraqengineering.com/page/terms-and-conditions"
                                         class="text-primary">terms</a> and <a class="text-primary"
                                         href="https://burraqengineering.com/page/privacy-policy">conditions</a>
                                 </label>
-                            </div>
+                            </div> --}}
                             @if (app()->environment(config('app.live_env')))
                                 <div class="form-group mt-3">
                                     {!! NoCaptcha::renderJs() !!}

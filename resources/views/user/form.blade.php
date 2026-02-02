@@ -48,12 +48,17 @@
             <select name="role" class="form-control" required>
                 <option value="admin"
                     {{ old('role', $user?->is_admin ?? 0 ? 'admin' : $user?->role ?? '') == 'admin' ? 'selected' : '' }}>
-                    Admin</option>
-                <option value="admission_officer"
-                    {{ old('role', $user?->role ?? '') == 'admission_officer' ? 'selected' : '' }}>Admission Officer
+                    Admin
                 </option>
-                <option value="hr_role" {{ old('role', $user?->role ?? '') == 'hr_role' ? 'selected' : '' }}>HR Manager
-                <option value="print_certificate" {{ old('role', $user?->role ?? '') == 'print_certificate' ? 'selected' : '' }}>Print Certificate
+                <option value="company"
+                    {{ old('role', $user?->is_admin ?? 0 ? 'admin' : $user?->role ?? '') == 'company' ? 'selected' : '' }}>
+                    {{ humanize("company") }}
+                </option>
+                {{-- <option value="admission_officer"
+                    {{ old('role', $user?->role ?? '') == 'admission_officer' ? 'selected' : '' }}>Admission Officer
+                </option> --}}
+                {{-- <option value="hr_role" {{ old('role', $user?->role ?? '') == 'hr_role' ? 'selected' : '' }}>HR Manager --}}
+                {{-- <option value="print_certificate" {{ old('role', $user?->role ?? '') == 'print_certificate' ? 'selected' : '' }}>Print Certificate --}}
                 </option>
             </select>
             @error('role')

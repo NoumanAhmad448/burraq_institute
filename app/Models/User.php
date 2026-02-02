@@ -41,7 +41,8 @@ class User extends Authenticatable implements MustVerifyEmail
         "language",
         "role",
         "profile_photo_path",
-        "is_deleted"
+        "is_deleted",
+        "paid_amount",
     ];
 
     /**

@@ -514,3 +514,6 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before {
     padding-left: 0;
 }
 
+.amount-orange {
+            color: #fd7e14
+        }
