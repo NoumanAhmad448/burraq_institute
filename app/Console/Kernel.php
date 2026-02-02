@@ -28,14 +28,6 @@ class Kernel extends ConsoleKernel
         $schedule->command("log:clear")->daily();
         $schedule->command("check:url-accessibility")->everyMinute();
         $schedule->command('cron:telescope-prune')->everyMinute();
-        $schedule->command('cron:overdue-students')
-            ->daily()
-            ->withoutOverlapping()
-            ->runInBackground();
-        $schedule->command('cron:follow-up-inquiries-due-today')
-        ->dailyAt('02:00')
-        ->withoutOverlapping()
-        ->runInBackground();
         $schedule->command('cron:delete-old-notifications')->dailyAt('02:00');
         $schedule->command('env:check-consistency')->everyMinute();
         $schedule->command('app:check-debug')->everyMinute();

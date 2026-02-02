@@ -5,7 +5,7 @@
 @section('footer')
 @if(Route::currentRouteName() !== 'login')
         <footer class="text-center bg-website p-3">
-            CRM All rights are reserved.
+            All rights are reserved.
         </footer>
     @endif
 

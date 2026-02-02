@@ -59,6 +59,7 @@ class UsrController extends Controller
                 $data['is_admin'] = 0;
                 // role stays as admission_officer or hr_role
             }
+            $data["payment_completed"] = 1;
             return $data;
     }
     public function update(UserFormRequest $request, User $user)

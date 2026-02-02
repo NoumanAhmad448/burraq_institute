@@ -55,13 +55,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        // Factory::factoryForModel(CronJobs::class, CronJobsFactory::class);
-        CrmStudent::observe(CrmStudentObserver::class);
-        EnrolledCourse::observe(EnrolledCourseObserver::class);
-        Inquiry::observe(InquiryObserver::class);
-        Profile::observe(ProfileObserver::class);
         User::observe(UserObserver::class);
-        EnrolledCoursePayment::observe(EnrolledCoursePaymentObserver::class);
 
 
         try {

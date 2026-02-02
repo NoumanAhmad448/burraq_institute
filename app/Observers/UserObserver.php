@@ -9,15 +9,17 @@ class UserObserver
 {
     public function created(User $user)
     {
-        UserLog::create([
-            'user_id'      => $user->id,
-            'performed_by' => auth()->id(),
-            'module'       => $user->role === 'hr' ? 'HR' : 'USERS',
-            'action'       => 'create',
-            'model'        => 'User',
-            'record_id'    => $user->id,
-            'new_values'   => $user->toArray(),
-        ]);
+        if (auth()->user()) {
+            UserLog::create([
+                'user_id'      => $user->id,
+                'performed_by' => auth()->id(),
+                'module'       => $user->role === 'hr' ? 'HR' : 'USERS',
+                'action'       => 'create',
+                'model'        => 'User',
+                'record_id'    => $user->id,
+                'new_values'   => $user->toArray(),
+            ]);
+        }
     }
 
     public function updated(User $user)

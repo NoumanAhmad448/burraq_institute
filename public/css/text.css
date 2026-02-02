@@ -1,9 +1,3 @@
-:root {
-  --brand-primary: var(--bs-primary);
-  --brand-accent: var(--bs-success);
-  --brand-border: var(--bs-primary);
-}
-
 /* ================================
    Sidebar Wrapper
 ================================ */
@@ -520,3 +514,6 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before {
     padding-left: 0;
 }
 
+.amount-orange {
+            color: #fd7e14
+        }

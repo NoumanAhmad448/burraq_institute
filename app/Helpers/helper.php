@@ -383,9 +383,11 @@ function recordLogs($message){
 
 function humanize($value)
 {
+    if(is_string($value)){
     return Str::of($value)
         ->replace('_', ' ')
         ->title(); // Capitalize each word
+    }
 }
 
 function statusBadgeClass($status)
